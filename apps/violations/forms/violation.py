@@ -5,10 +5,8 @@ from django.db import NotSupportedError
 from django.db.models import QuerySet
 from django.utils.translation import gettext_lazy as _
 
-from .fields.rule import RulesModelMultipleChoiceFieldWithId
-from .models import Rule
-
-from .models import Violation
+from ..fields.rule import RulesModelMultipleChoiceFieldWithId
+from ..models import Rule, Violation
 
 
 class ViolationForm(forms.ModelForm):
