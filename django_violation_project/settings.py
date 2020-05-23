@@ -38,8 +38,6 @@ INSTALLED_APPS = [
 
     'apps.violations.apps.ViolationsConfig',
 
-    'apps.threads.apps.ThreadsConfig',
-
 ]
 
 MIDDLEWARE = [
