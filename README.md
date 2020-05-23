@@ -83,11 +83,11 @@ def report_thread(request, pk):
         'object': thread,
     }
     if request.method == 'POST':
-        form = ThreadReportForm(data=request.POST, **form_kwargs)
+        form = ViolationForm(data=request.POST, **form_kwargs)
         if form.is_valid():
             form.save()
     else:
-        form = ThreadReportForm(**form_kwargs)
+        form = ViolationForm(**form_kwargs)
     context = {
         'form': form,
         'thread': thread
@@ -101,7 +101,7 @@ For further customization, see project source code in github.
 
 Limitations
 
-In future releases, every features needed to get violation function will be implemented
+Lack of links and UI.
 
 ## Versioning
 
