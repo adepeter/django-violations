@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ thread.title }}{% endblock %}
+
+{% block content %}
+    <div class="mainblok">
+        <div class="phdr">{{ thread }}</div>
+        <div class="gmenu">
+            {{ thread.text }}
+        </div>
+        <div class="phdr">
+            <a href="{% url 'django-violations:threads:report_thread' thread.pk %}">Report</a>
+        </div>
+    </div>
+{% endblock %}
