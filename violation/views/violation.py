@@ -1,7 +1,7 @@
 from django.views.generic.edit import CreateView
 
-from ..forms.violation import ViolationForm
-from ..viewmixins.violation import BaseViolationViewMixin
+from violation.forms.violation import ViolationForm
+from violation.viewmixins.violation import BaseViolationViewMixin
 
 
 class BaseViolationView(BaseViolationViewMixin, CreateView):

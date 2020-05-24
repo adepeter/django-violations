@@ -4,12 +4,10 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from .rule import Rule
-
 User = get_user_model()
 
 
-class Violation(models.Model):
+class BaseViolationModelMixin(models.Model):
     VIOLATION_STATUS_PENDING = 0
     VIOLATION_STATUS_ACCEPTED = 1
     VIOLATION_STATUS_REJECTED = 2
@@ -37,7 +35,7 @@ class Violation(models.Model):
         null=True,
         blank=True
     )
-    rules = models.ManyToManyField(Rule, related_name='violations')
+    rules = models.ManyToManyField('violation.Rule', related_name='violations')
     status = models.PositiveSmallIntegerField(
         choices=VIOLATION_STATUS_CHOICES,
         default=VIOLATION_STATUS_PENDING
@@ -47,7 +45,7 @@ class Violation(models.Model):
     modified = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
-        from ..signals import report_handler
+        from violation.signals import report_handler
         super().save(*args, **kwargs)
         report_handler.send(
             sender=self.__class__,
@@ -57,3 +55,10 @@ class Violation(models.Model):
 
     def __str__(self):
         return f'{self.reported_by} just reported {self.content_object} for violation'
+
+    class Meta:
+        abstract = True
+        constraints = [
+            models.UniqueConstraint(fields=['content_type', 'object_id', 'reported_by'],
+                                    name='unique_violation_constraint')
+        ]

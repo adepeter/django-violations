@@ -1,12 +1,14 @@
-# DJANGO-VIOLATION v1.0.0
+# django-violation
 
 ## Description
 
-Description Django-violations is a very simple app which serves the purpose of violation. It can easily be plugged into any django app of your choice with just little line of code/customization but with robust function.
+Description Django-violation is a very simple app which serves the purpose of violation. It can easily be plugged into any django app of your choice with just little line of code/customization but with robust function.
 
 ## Installation
 
+```
 pip install django-violation
+```
 
 ## Features
 
@@ -40,7 +42,7 @@ INSTALLED_APPS = [
 
 ...
 
-'django_violations',
+'django_violation',
 
 ]
 ```
@@ -49,14 +51,14 @@ INSTALLED_APPS = [
 
    For Lovers of class views, just import `BaseViolationViewMixin`
 
-   `from django_violation.viewmixins import BaseViolationMixin`
+   `from violation.viewmixins import BaseViolationMixin`
 
    Inherit the view class and supply other `CreateView` parameters other than form_class.
 
    Do something similar to this
 
    ```
-   from django_violation.views.violation import BaseViolationView
+   from violation.views.violation import BaseViolationView
    
    class ThreadViolationView(BaseViolationView):
        template_name = ''
@@ -105,7 +107,7 @@ Lack of links and UI.
 
 ## Versioning
 
-SemVer is for versioning. For the versions available, see the tags on this repository.
+SemVer is the versioning style utilised for this app. For the versions available, see the tags on this repository https://github.com/adepeter/django-violations/releases.
 
 ## License
 
@@ -113,5 +115,5 @@ This work uses MIT license
 
 ## Acknowledgement
 
-- A big heart to Sammy Bala.
+- A big heart to Sammy Bala http://github.com/samailabala.
 - Thanks to Stephen Efe.

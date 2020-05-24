@@ -1,0 +1,9 @@
+include AUTHORS
+include CHANGELOG.rst
+include LICENSE
+include README.rst
+include README.md
+include tox.ini
+recursive-include docs *.py *.rst
+recursive-include violation/locale *.mo *.po
+recursive-include tests *.html *.py

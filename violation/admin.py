@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Rule, Violation
+from violation.models import Rule, Violation
 
 
 class RuleViolationInline(admin.StackedInline):
@@ -18,6 +18,7 @@ class RuleAdmin(admin.ModelAdmin):
 
     def short_rule(self, obj):
         return obj.description[:20]
+
     short_rule.short_description = 'Description'
 
 
@@ -58,23 +59,28 @@ class ViolationAdmin(admin.ModelAdmin):
 
     def item_of_violation_category(self, obj):
         return obj.content_type
+
     item_of_violation_category.short_description = 'Item category'
 
     def item_of_violation(self, obj):
         return obj.content_object
+
     item_of_violation.short_description = 'Item of violation'
 
     def date_reported(self, obj):
         return obj.created
+
     date_reported.short_description = 'Date reported'
 
     def last_modified(self, obj):
         return obj.modified
+
     date_reported.short_description = 'Last action'
 
     def rules_violated(self, obj):
         rules = obj.rules.all()
         return ('%s' % ', '.join([rule.name for rule in rules]))
+
     short_description = 'Violated rules'
 
     def get_readonly_fields(self, request, obj=None):
