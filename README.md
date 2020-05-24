@@ -1,8 +1,8 @@
-# DJANGO-VIOLATION v1.0.0
+# DJANGO-VIOLATION
 
 ## Description
 
-Description Django-violations is a very simple app which serves the purpose of violation. It can easily be plugged into any django app of your choice with just little line of code/customization but with robust function.
+Description Django-violation is a very simple app which serves the purpose of violation. It can easily be plugged into any django app of your choice with just little line of code/customization but with robust function.
 
 ## Installation
 
