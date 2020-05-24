@@ -5,4 +5,7 @@ from ..viewmixins.violation import BaseViolationViewMixin
 
 
 class BaseViolationView(BaseViolationViewMixin, CreateView):
-    form_class = ViolationForm
+    """
+    To use this view, you must defined a form_class
+    that inherits from either BaseViolationForm or ViolationForm
+    """

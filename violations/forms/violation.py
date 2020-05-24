@@ -9,18 +9,20 @@ from ..fields.rule import RulesModelMultipleChoiceFieldWithId
 from ..models import Rule, Violation
 
 
-class ViolationForm(forms.ModelForm):
-    """
-    This is the base form to display list of rules in a category
-    1. ::categories: rules in specified categories to display
-    2. ::queryset: rules queryset to display.
-    3. ::dont_repeat_rules: allow whether to show already violated rule by an object
-    or not. If set to False, rules already violated by an item will still be made available
-    for other users to select.
-    """
+class BaseViolationForm(forms.ModelForm):
+    """ This is the base form for further customization """
     categories = None
     queryset = None
     dont_repeat_rules = False
+
+    """
+        This is the base form to display list of rules in a category
+        1. ::categories: rules in specified categories to display
+        2. ::queryset: rules queryset to display.
+        3. ::dont_repeat_rules: allow whether to show already violated rule by an object
+        or not. If set to False, rules already violated by an item will still be made available
+        for other users to select.
+    """
 
     rules = RulesModelMultipleChoiceFieldWithId(queryset=None)
 
@@ -102,4 +104,12 @@ class ViolationForm(forms.ModelForm):
         self.instance.reported_by = self.request.user
         self.instance.content_type = ContentType.objects.get_for_model(self.object)
         self.instance.object_id = self.object.id
-        return super(ViolationForm, self).save(*args, **kwargs)
+        return super().save(*args, **kwargs)
+
+
+class ViolationForm(BaseViolationForm):
+    """
+    This is just a sample form.
+    Free to inherit it if you just want simple violation rules display
+    """
+    categories = ['general']

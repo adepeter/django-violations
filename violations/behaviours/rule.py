@@ -29,7 +29,14 @@ class BaseRuleMixin(models.Model):
     )
     name = models.CharField(verbose_name=_('name'), max_length=255)
     description = models.TextField(verbose_name=_('description'))
-    added_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='+')
+    added_by = models.ForeignKey(
+        User,
+        verbose_name=_('Added by'),
+        on_delete=models.DO_NOTHING,
+        related_name='+',
+        null=True,
+        blank=True
+    )
 
     def __str__(self):
         return f'{self.name} - {self.get_category_display()}'

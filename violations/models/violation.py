@@ -30,11 +30,12 @@ class Violation(models.Model):
         related_name='violations_reported',
         null=True
     )
-    violated_by = models.ForeignKey(
+    violator = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,
         related_name='violations_broken',
-        null=True
+        null=True,
+        blank=True
     )
     rules = models.ManyToManyField(Rule, related_name='violations')
     status = models.PositiveSmallIntegerField(
@@ -42,6 +43,8 @@ class Violation(models.Model):
         default=VIOLATION_STATUS_PENDING
     )
     is_violated = models.NullBooleanField()
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
         from ..signals import report_handler
