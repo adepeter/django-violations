@@ -35,7 +35,6 @@ class BaseViolationModelMixin(models.Model):
         null=True,
         blank=True
     )
-    rules = models.ManyToManyField('violation.Rule', related_name='violations')
     status = models.PositiveSmallIntegerField(
         choices=VIOLATION_STATUS_CHOICES,
         default=VIOLATION_STATUS_PENDING
@@ -59,6 +58,15 @@ class BaseViolationModelMixin(models.Model):
     class Meta:
         abstract = True
         constraints = [
-            models.UniqueConstraint(fields=['content_type', 'object_id', 'reported_by'],
-                                    name='unique_violation_constraint')
+            models.UniqueConstraint(
+                fields=['content_type', 'object_id', 'reported_by'],
+                name='unique_violation_constraint'
+            )
         ]
+
+
+class ViolationRuleModelMixin(BaseViolationModelMixin):
+    rules = models.ManyToManyField('violation.Rule', related_name='violations')
+
+    class Meta:
+        abstract = True
