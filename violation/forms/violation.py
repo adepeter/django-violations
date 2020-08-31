@@ -5,7 +5,7 @@ from django.db import NotSupportedError
 from django.db.models import QuerySet
 from django.utils.translation import gettext_lazy as _
 
-from violation.fields.rule import RulesModelMultipleChoiceFieldWithId
+from violation.fields.rule import RulesModelMultipleChoiceField
 from violation.models import Rule, Violation
 
 
@@ -24,7 +24,7 @@ class BaseViolationForm(forms.ModelForm):
         for other users to select.
     """
 
-    rules = RulesModelMultipleChoiceFieldWithId(queryset=None)
+    rules = RulesModelMultipleChoiceField(queryset=None)
 
     class Meta:
         model = Violation
@@ -38,7 +38,7 @@ class BaseViolationForm(forms.ModelForm):
             self.rules_queryset = self.unique_rules_queryset()
         super().__init__(*args, **kwargs)
         self.fields['rules'].widget = forms.CheckboxSelectMultiple()
-        self.fields['rules'] = RulesModelMultipleChoiceFieldWithId(
+        self.fields['rules'] = RulesModelMultipleChoiceField(
             queryset=self.rules_queryset,
             widget=forms.CheckboxSelectMultiple
         )
@@ -87,24 +87,28 @@ class BaseViolationForm(forms.ModelForm):
         return violations.exists()
 
     def unique_rules_queryset(self):
-        """
-        This method is called only when self.dont_repeat_rules is set.
-        """
+        """This method is called only when self.dont_repeat_rules is set."""
         qs = self.get_queryset()
         return qs.exclude(
             violations__isnull=False,
-            violations__status__in=[Violation.VIOLATION_STATUS_PENDING, Violation.VIOLATION_STATUS_ACCEPTED],
+            violations__status__in=[
+                Violation.VIOLATION_STATUS_PENDING,
+                Violation.VIOLATION_STATUS_ACCEPTED
+            ],
             violations__content_type=ContentType.objects.get_for_model(self.object),
             violations__object_id=self.object.id,
             violations__reported_by=self.request.user,
             violations__is_violated__isnull=True
         )
 
-    def save(self, *args, **kwargs):
-        self.instance.reported_by = self.request.user
-        self.instance.content_type = ContentType.objects.get_for_model(self.object)
-        self.instance.object_id = self.object.id
-        return super().save(*args, **kwargs)
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.reported_by = self.request.user
+        instance.content_type = ContentType.objects.get_for_model(self.object)
+        instance.object_id = self.object.id
+        if commit:
+            instance.save()
+        return instance
 
 
 class ViolationForm(BaseViolationForm):

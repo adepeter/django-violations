@@ -8,9 +8,10 @@ User = get_user_model()
 
 
 class BaseViolationModelMixin(models.Model):
-    VIOLATION_STATUS_PENDING = 0
-    VIOLATION_STATUS_ACCEPTED = 1
-    VIOLATION_STATUS_REJECTED = 2
+
+    VIOLATION_STATUS_PENDING = 0 # whether violation is awaiting approval from admin
+    VIOLATION_STATUS_ACCEPTED = 1 # whether violation has been accepted by admin
+    VIOLATION_STATUS_REJECTED = 2 # whether violation was rejected by admin
 
     VIOLATION_STATUS_CHOICES = (
         (VIOLATION_STATUS_PENDING, _('Pending')),
@@ -39,7 +40,7 @@ class BaseViolationModelMixin(models.Model):
         choices=VIOLATION_STATUS_CHOICES,
         default=VIOLATION_STATUS_PENDING
     )
-    is_violated = models.NullBooleanField()
+    is_violated = models.BooleanField(null=True)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 

@@ -28,8 +28,8 @@ Among some of its basic features are:
 
 ## Requirements
 
-- Python >= 3.5
-- Django >= 2.2
+- Python >= 3.7
+- Django >= 3.1
 
 ## Usage
 
@@ -128,8 +128,3 @@ SemVer is the versioning style utilized for this app. For the versions available
 ## License
 
 This work uses MIT license
-
-## Acknowledgement
-
-- A big heart to [Samaila Bala](http://github.com/samailabala).
-- Thanks to Stephen Efe.
