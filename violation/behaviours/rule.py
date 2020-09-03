@@ -31,14 +31,6 @@ class BaseRuleModelMixin(models.Model):
     )
     name = models.CharField(verbose_name=_('name'), max_length=255)
     description = models.TextField(verbose_name=_('description'))
-    added_by = models.ForeignKey(
-        User,
-        verbose_name=_('Added by'),
-        on_delete=models.DO_NOTHING,
-        related_name='+',
-        null=True,
-        blank=True
-    )
     objects = RuleManager()
 
     def __str__(self):

@@ -22,7 +22,6 @@ class Migration(migrations.Migration):
                 ('category', models.CharField(blank=True, choices=[('post', 'Post'), ('forum', 'Forum'), ('thread', 'Thread'), ('user', 'User'), ('general', 'General')], max_length=10, null=True, verbose_name='category')),
                 ('name', models.CharField(max_length=255, verbose_name='name')),
                 ('description', models.TextField(verbose_name='description')),
-                ('added_by', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='+', to=settings.AUTH_USER_MODEL, verbose_name='Added by')),
             ],
             options={
                 'verbose_name': 'Rule',

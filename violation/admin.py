@@ -10,10 +10,10 @@ class RuleViolationInline(admin.StackedInline):
 @admin.register(Rule)
 class RuleAdmin(admin.ModelAdmin):
     radio_fields = {'category': admin.HORIZONTAL}
-    list_display = ['name', 'category', 'short_rule', 'added_by']
-    list_filter = ['category', 'added_by']
+    list_display = ['name', 'category', 'short_rule']
+    list_filter = ['category']
     search_fields = ['name', 'category', 'description']
-    ordering = ['name', 'category', 'added_by']
+    ordering = ['name', 'category']
     save_on_top = True
 
     def short_rule(self, obj):
