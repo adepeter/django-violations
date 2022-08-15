@@ -45,18 +45,15 @@ class BaseViolationForm(forms.ModelForm):
 
     def get_queryset(self):
         if self.categories is None:
-            if self.queryset is not None:
-                queryset = self.queryset
-                if isinstance(self.queryset, QuerySet):
-                    queryset = queryset.all()
-                else:
-                    raise NotSupportedError('%s is actually not a QuerySet' % self.queryset)
-            else:
+            if self.queryset is None:
                 raise ImproperlyConfigured('self.categories or self.queryset is needed to load this form')
+            queryset = self.queryset
+            if isinstance(self.queryset, QuerySet):
+                queryset = queryset.all()
+            else:
+                raise NotSupportedError(f'{self.queryset} is actually not a QuerySet')
         else:
-            queryset = Rule.objects.filter(
-                category__in=[category for category in self.categories]
-            )
+            queryset = Rule.objects.filter(category__in=list(self.categories))
         return queryset
 
     def clean_rules(self):
@@ -65,8 +62,7 @@ class BaseViolationForm(forms.ModelForm):
         report an item more than ones
         """
         cleaned_rules = self.cleaned_data['rules']
-        check_spam_violations = self.check_spam_rules(cleaned_rules, self.request.user)
-        if check_spam_violations:
+        if check_spam_violations := self.check_spam_rules(cleaned_rules, self.request.user):
             raise forms.ValidationError(
                 _('A rule cannot be reported twice for violation'),
                 code='multiple_violations'

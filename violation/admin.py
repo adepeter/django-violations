@@ -79,11 +79,9 @@ class ViolationAdmin(admin.ModelAdmin):
 
     def rules_violated(self, obj):
         rules = obj.rules.all()
-        return ('%s' % ', '.join([rule.name for rule in rules]))
+        return f"{', '.join([rule.name for rule in rules])}"
 
     short_description = 'Violated rules'
 
     def get_readonly_fields(self, request, obj=None):
-        if obj is not None:
-            return self.list_display
-        return []
+        return self.list_display if obj is not None else []

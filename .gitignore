@@ -8,6 +8,9 @@ __pycache__/
 # C extensions
 *.so
 
+# django project
+django_violation_proj/
+
 # Distribution / packaging
 .Python
 build/
@@ -38,6 +41,8 @@ MANIFEST
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
+Pipfile.lock
+Pipfile
 
 # Unit test / coverage reports
 htmlcov/
